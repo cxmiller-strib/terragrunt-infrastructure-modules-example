@@ -1,10 +1,14 @@
+locals {
+  bucket_name = "${var.name}-${var.environment}-${var.aws_region}"
+}
+
 resource "aws_s3_bucket" "this" {
-  bucket = "${var.name}-${var.environment}-${var.aws_region}"
+  bucket = local.bucket_name
 
   tags = merge(
     var.tags,
     {
-      Name        = var.name
+      Name        = local.bucket_name
       Environment = var.environment
     }
   )
